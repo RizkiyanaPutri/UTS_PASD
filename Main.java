@@ -57,6 +57,7 @@ public class Main {
             daftarPinjam[i] = new Peminjaman(daftarMhs[m], daftarBuku[b], lama);
         }
 
+        
         // ================= MENU =================
         int pilihan;
         do {
@@ -86,7 +87,23 @@ public class Main {
                     break;
 
                 case 4:
-                    // (belum dimodif di nomor 1)
+                    System.out.println("Pilih Sorting:");
+                    System.out.println("1. Insertion Sort");
+                    System.out.println("2. Bubble Sort");
+                    System.out.print("Pilih: ");
+                    int pilihSort = sc.nextInt();
+
+                    if (pilihSort == 1) {
+                        insertionSort(daftarPinjam);
+                    } else if (pilihSort == 2) {
+                        bubbleSort(daftarPinjam);
+                    } else {
+                        System.out.println("Pilihan salah");
+                        break;
+                    }
+
+                    cetakHeaderTabel();
+                    for (Peminjaman p : daftarPinjam) p.tampilPeminjaman();
                     break;
 
                 case 5:
@@ -97,6 +114,30 @@ public class Main {
         } while (pilihan != 0);
     }
 
+        public static void insertionSort(Peminjaman[] arr) {
+        for (int i = 1; i < arr.length; i++) {
+            Peminjaman key = arr[i];
+            int j = i - 1;
+
+            while (j >= 0 && arr[j].denda < key.denda) {
+                arr[j + 1] = arr[j];
+                j--;
+            }
+            arr[j + 1] = key;
+        }
+    }
+
+    public static void bubbleSort(Peminjaman[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            for (int j = 0; j < arr.length - i - 1; j++) {
+                if (arr[j].denda < arr[j + 1].denda) {
+                    Peminjaman temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+    }
     public static void cetakHeaderTabel() {
         System.out.println("--------------------------------------------------------------");
         System.out.printf("%-10s | %-10s | %-15s | %-10s | %-10s | %-10s\n",
