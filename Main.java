@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -107,8 +108,22 @@ public class Main {
                     break;
 
                 case 5:
-                    // (belum dimodif di nomor 1)
+                    Arrays.sort(daftarPinjam, (p1, p2) -> p1.mhs.nim.compareTo(p2.mhs.nim));
+
+                    System.out.print("Masukkan NIM: ");
+                    String cari = sc.nextLine();
+
+                    int hasil = binarySearchManual(daftarPinjam, cari);
+
+                    if (hasil != -1) {
+                        System.out.println("Data ditemukan pada indeks ke-" + hasil);
+                        cetakHeaderTabel();
+                        daftarPinjam[hasil].tampilPeminjaman();
+                    } else {
+                        System.out.println("Data tidak ditemukan");
+                    }
                     break;
+
             }
 
         } while (pilihan != 0);
@@ -138,6 +153,21 @@ public class Main {
             }
         }
     }
+
+    public static int binarySearchManual(Peminjaman[] arr, String target) {
+    int low = 0, high = arr.length - 1;
+
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        int res = target.compareTo(arr[mid].mhs.nim);
+
+        if (res == 0) return mid;
+        else if (res > 0) low = mid + 1;
+        else high = mid - 1;
+    }
+    return -1;
+}
+
     public static void cetakHeaderTabel() {
         System.out.println("--------------------------------------------------------------");
         System.out.printf("%-10s | %-10s | %-15s | %-10s | %-10s | %-10s\n",
